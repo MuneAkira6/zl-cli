@@ -1,0 +1,36 @@
+{
+  "name": "fumi",
+  "version": "0.0.1",
+  "author": "muneakira",
+  "description": "a react project cli, help you create a react project with webpack or parcel quickly",
+  "main": "index.js",
+  "scripts": {
+    "patch": "npm version patch",
+    "minor": "npm version minor",
+    "mmajor": "npm version mmajor",
+    "preminor": "npm version preminor"
+  },
+  "bin": {
+    "fumi": "index.js"
+  },
+  "dependencies": {
+    "boxen": "^5.1.2",
+    "chalk": "^4.1.2",
+    "commander": "^9.1.0",
+    "consolidate": "^0.16.0",
+    "cross-spawn": "^7.0.3",
+    "download-git-repo": "^3.0.2",
+    "ejs": "^3.1.6",
+    "figlet": "^1.5.2",
+    "fs-extra": "^10.0.1",
+    "inquirer": "^8.2.1",
+    "metalsmith": "^2.4.2",
+    "semver": "^7.3.5",
+    "shelljs": "^0.8.4"
+  },
+  "keywords": [
+    "react",
+    "cli"
+  ],
+  "license": "ISC"
+}
