@@ -50,7 +50,7 @@ module.exports = async function create(projectName) {
     inquirer.prompt(promptList).then(async (answers) => {
         const destDir = path.join(process.cwd(), projectName);
 
-        // 1. local or git (choose local)
+        // 1. local or git (force choose local)
         answers.source = "local";
         if (answers.source === "local") {
             // 创建文件夹
