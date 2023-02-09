@@ -50,10 +50,9 @@ module.exports = async function create(projectName) {
     inquirer.prompt(promptList).then(async (answers) => {
         const destDir = path.join(process.cwd(), projectName);
 
-        // 0. local or git (choose local)
+        // 1. local or git (choose local)
         answers.source = "local";
         if (answers.source === "local") {
-            console.log("\nUsing local files...");
             // 创建文件夹
             fs.mkdir(destDir, { recursive: true }, (err) => {
                 if (err) throw err;
@@ -61,23 +60,7 @@ module.exports = async function create(projectName) {
 
             // 根据选项，读取模板文件并渲染
             const localTemplatePath = path.join(path.normalize(`${__dirname}/../template`), `Fumi-template`);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            await renderTemplate(localTemplatePath, projectName, {
-                pkg: answers.pkg
-            });
+            await renderTemplate(localTemplatePath, projectName);
         } else if (answers.source === "git") {
             // 由于git项目文件名称的限制，这里需要转换一下移动端的名称
             // 下载地址
@@ -88,10 +71,8 @@ module.exports = async function create(projectName) {
             });
 
             console.log(`\nYou select project template url is ${downloadPath} \n`);
-
             const data = await go(downloadPath, destDir); // downloadTemplate
-
-            await renderTemplate(data.projectRoot, projectName, {});
+            await renderTemplate(data.projectRoot, projectName);
         }
 
         // 2. 是否需要install

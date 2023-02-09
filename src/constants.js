@@ -2,13 +2,13 @@ const { version } = require("../package.json");
 
 const baseUrl = "https://github.com/MuneAkira6";
 const promptList = [
-    {
-        name: "pkg",
-        message: "选择package.json。将使用动态生成的方式",
-        type: "list",
-        default: "type1",
-        choices: ["type1", "type2"],
-    },
+    // {
+    //     name: "pkg",
+    //     message: "选择package.json。将使用动态生成的方式",
+    //     type: "list",
+    //     default: "type1",
+    //     choices: ["type1", "type2"],
+    // },
     // {
     //     name: "type",
     //     message: "Which build tool to use for the project?",
