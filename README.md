@@ -1,4 +1,4 @@
-## fumi
+## zl-cli
 ### 使用
 开发阶段直接在<strong>本项目文件夹</strong>输入：
 

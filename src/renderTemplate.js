@@ -6,7 +6,7 @@ const inquirer = require("inquirer");
 const renderForPromise = promisify(render);
 const fs = require("fs-extra");
 
-module.exports = async function renderTemplate(sourceTemplatePath, projectName, { packageJson = "" }) {
+module.exports = async function renderTemplate(sourceTemplatePath, projectName, { pkg = "" }) {
     if (!sourceTemplatePath) {
         return Promise.reject(new Error(`无效的source：${sourceTemplatePath}`));
     }
@@ -47,9 +47,14 @@ module.exports = async function renderTemplate(sourceTemplatePath, projectName, 
             .use((files, metal, done) => {
                 // 动态注入文件
                 // 读取package.json，修改以后写回去
+                const packageJson = JSON.parse(files['package.json'].contents.toString());
+                packageJson.customProperty = pkg
+                files["package.json"].contents = Buffer.from(JSON.stringify(packageJson, null, 2) + '\n');
+
+                done()
             })
             .use((files, metal, done) => {
-                // 模板的方式
+                // 使用模板的方式注入文件
                 const meta = metal.metadata();
 
                 // ejs变量示例
@@ -57,12 +62,12 @@ module.exports = async function renderTemplate(sourceTemplatePath, projectName, 
 
                 const fileTypeList = [".ts", ".js", ".json", ".html"]; // 选择要替换的后缀名文件
                 Object.keys(files).forEach(async (fileName) => {
-                    let c = files[fileName].contents.toString();
+                    let fileContent = files[fileName].contents.toString();
                     for (const type of fileTypeList) {
                         // 只有包含'<%'的才会被过滤
-                        if (fileName.includes(type) && c.includes("<%")) {
-                            c = await renderForPromise(c, meta);
-                            files[fileName].contents = Buffer.from(c);
+                        if (fileName.includes(type) && fileContent.includes("<%")) {
+                            fileContent = await renderForPromise(fileContent, meta);
+                            files[fileName].contents = Buffer.from(fileContent);
                         }
                     }
                 });

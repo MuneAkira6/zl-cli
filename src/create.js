@@ -76,7 +76,7 @@ module.exports = async function create(projectName) {
 
 
             await renderTemplate(localTemplatePath, projectName, {
-                packageJson: answers.pkg
+                pkg: answers.pkg
             });
         } else if (answers.source === "git") {
             // 由于git项目文件名称的限制，这里需要转换一下移动端的名称
